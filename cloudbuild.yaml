@@ -1,5 +1,16 @@
 steps:
-- name: "docker" 
+  # build the container image
+- name: "gcr.io/cloud-builders/docker"
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/expensetracker', '.']
-images:
-  - "gcr.io/$PROJECT_ID/expensetracker"
+  # push container image
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/$PROJECT_ID/expensetracker"]
+  # deploy container image to GKE
+- name: "gcr.io/cloud-builders/gke-deploy"
+  args:
+  - run
+  - --filename=gke.yaml
+  - --image=gcr.io/$PROJECT_ID/expensetracker
+  - --location=us-central1-c
+  - --cluster=expense-tracker-cicd
+  - --namespace=gcp-devops-dev
