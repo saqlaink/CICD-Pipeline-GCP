@@ -1,3 +1,9 @@
+## To dockerise the app
+
+docker build -t [name:tag] .
+
+docker run -d -it –rm -p [host_port]:[container_port] –name [container_name] [image_id/image_tag]
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
